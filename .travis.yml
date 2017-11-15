@@ -1,0 +1,12 @@
+---
+sudo: required
+services:
+  - docker
+env:
+  - IMAGE_OWNER=trainlineeurope
+  - IMAGE_NAME=puppetserver
+install:
+  - docker build -t ${IMAGE_OWNER}/${IMAGE_NAME}:latest .
+  - docker run -d --name ${IMAGE_NAME} ${IMAGE_OWNER}/${IMAGE_NAME}:latest
+script:
+  - docker ps | grep -q ${IMAGE_NAME} && echo "CONTAINER BUILT & RUNNING SUCCESSFULLY" || echo "CONTAINER NOT RUNNING"

@@ -1,5 +1,4 @@
 FROM ubuntu:xenial
-MAINTAINER Maxime VISONNEAU "maxime.visonneau@gmail.com"
 
 ENV \
 PUPPET_SERVER_VERSION="5.1.4" \

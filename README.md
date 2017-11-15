@@ -1,5 +1,8 @@
 # docker-puppetserver
 
+[![PULLS](https://img.shields.io/docker/pulls/trainlineeurope/r10k.svg)](https://hub.docker.com/r/trainlineeurope/puppetserver)
+[![BUILD](https://img.shields.io/travis/trainline-eu/docker-puppetserver/master.svg)](https://travis-ci.org/trainline-eu/docker-puppetserver)
+
 This repo contains the `Docker` image definition for `puppetserver`.
 
 ## Usage

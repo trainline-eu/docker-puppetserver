@@ -9,7 +9,7 @@ PATH=${PATH}:/opt/puppetlabs/server/bin:/opt/puppetlabs/puppet/bin:/opt/puppetla
 
 RUN \
 apt-get update && \
-apt-get install -y curl lsb-release git vim && \
+apt-get install -y curl lsb-release git vim make && \
 curl -s https://apt.puppetlabs.com/puppet5-release-$(lsb_release -cs).deb -o puppet-release.deb && \
 dpkg -i puppet-release.deb && \
 rm puppet-release.deb && \
@@ -17,6 +17,7 @@ apt-get update && \
 apt-get install -y --no-install-recommends puppetserver=${PUPPET_SERVER_VERSION}-1$(lsb_release -cs) puppetdb-termini=${PUPPET_DB_TERMINI_VERSION}-1$(lsb_release -cs) && \
 apt-get clean && \
 rm -rf /var/lib/apt/lists/* /etc/puppetlabs/puppet/auth.conf /etc/puppetlabs/puppet/hiera.yaml /etc/puppetlabs/pxp-agent /etc/puppetlabs/mcollective && \
+gem install r10k && \
 puppetserver gem install hiera-eyaml deep_merge
 
 ADD conf.d/puppetserver.default /etc/default/puppetserver
@@ -28,8 +29,9 @@ EXPOSE 8140
 
 ADD docker-*.sh /
 ADD docker-entrypoint.d/* /docker-entrypoint.d/
+ADD Makefile /Makefile
 
 HEALTHCHECK --interval=10s --timeout=10s --retries=90 CMD /docker-healthcheck.sh
 
-ENTRYPOINT [ "/docker-entrypoint.sh" ]
-CMD [ "puppetserver", "foreground" ]
+ENTRYPOINT [ "make" ]
+CMD [ "puppetserver" ]
